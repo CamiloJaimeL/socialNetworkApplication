@@ -1,0 +1,11 @@
+{
+  "targets": {
+    "social-media-e0914": {
+      "hosting": {
+        "socialAppfrontEnd": [
+          "social-media-e0914"
+        ]
+      }
+    }
+  }
+}

@@ -1,0 +1,26 @@
+<section class="register">
+  <div class="header">
+  <h3>Registrarte</h3>
+  <p>Es fácil y sencillo</p>
+  </div>
+
+  <div class="body">
+    <form #form="ngForm">
+      <div class="user_name">
+        <input type="text" placeholder="Nombre" name="fname" ngModel>
+        <input type="text" placeholder="Apellido" name="lname" ngModel>
+      </div>
+
+      <div class="email_password">
+        <input type="text" placeholder="Email" name="email" ngModel>
+        <input type="text" placeholder="Image Url" name="avatar" ngModel>
+        <input type="password" placeholder="Contraseña nueva" name="password" ngModel>
+      </div>
+
+      <p>Al hacer clic en "Registrarte", aceptas nuestras Condiciones, la Política de datos y la Política de cookies. Es posible que te enviemos notificaciones por SMS, que puedes desactivar cuando quieras. </p>
+
+      <button type="submit" class="submit-button" [mat-dialog-close]="form.value"> Registrarte</button>
+
+    </form>
+  </div>
+</section>
