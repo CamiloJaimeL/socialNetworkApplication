@@ -1,12 +1,15 @@
-import { Component, OnInit } from '@angular/core';
+import {Component, OnDestroy, OnInit} from '@angular/core';
 import {NgForm} from "@angular/forms";
+import {AuthService, UserData} from "../../services/auth.service";
+import {Subscription} from "rxjs";
+import {PostService} from "../../services/post.service";
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.component.html',
   styleUrls: ['./home.component.scss']
 })
-export class HomeComponent implements OnInit {
+export class HomeComponent implements OnInit, OnDestroy {
 
   images: any[] = [
     'https://images-na.ssl-images-amazon.com/images/I/51DR2KzeGBL._AC_.jpg',
@@ -17,16 +20,46 @@ export class HomeComponent implements OnInit {
     'https://upload.wikimedia.org/wikipedia/commons/9/9a/Swepac_FB_465%2C_RV70%2C_with_passing_lorry.jpg'
   ];
 
-  constructor() { }
+  posts:any[] = [];
+  User: UserData;
+  subs: Subscription[] = [];
+
+  constructor(private postService: PostService,
+              private authService: AuthService) { }
 
   ngOnInit(): void {
+
+    this.subs.push(
+      this.postService.getAllPosts().subscribe(posts => {
+        this.posts = posts;
+      })
+    );
+
+    this.subs.push(
+        this.authService.CurrentUser().subscribe(user => {
+          this.User = user;
+        })
+    );
+  }
+
+  ngOnDestroy(): void {
+    this.subs.map(s => s.unsubscribe());
   }
 
   postMessage(form: NgForm): void {
-    console.log(form.value) ;
+    const {message} = form.value;
+    this.postService.postMessage(message,
+      `${this.User.firstName} ${this.User.lastName}`,
+      {
+        avatar: this.User.avatar,
+        lastName: this.User.lastName,
+        firstname: this.User.firstName
+      },
+    );
+    form.resetForm();
   }
 
-  logout() {
-
+  logout(): void {
+    this.authService.Logout();
   }
 }

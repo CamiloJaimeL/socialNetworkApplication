@@ -30,11 +30,8 @@
     </div>
     <div class="home__header__right">
       <div>
-        <img
-          alt=""
-          mat-card-avatar
-          [src]="">
-        <span class="name"></span>
+        <img [src]="User?.avatar" alt="" mat-card-avatar>
+        <span class="name">{{ User?.firstName || 'Default User' }}</span>
       </div>
       <div>
         <mat-icon>add</mat-icon>
@@ -61,7 +58,7 @@
         <mat-icon [matMenuTriggerFor]="menu">expand_more</mat-icon>
         <mat-menu #menu="matMenu">
           <button mat-menu-item (click)="logout()">
-            <mat-icon>exit_to_app</mat-icon> Logout
+            <mat-icon (click)="logout()">exit_to_app</mat-icon> Logout
           </button>
         </mat-menu>
       </div>
@@ -82,7 +79,7 @@
             <img
               alt="avatar"
               class="avatar" src="https://cdn4.iconfinder.com/data/icons/instagram-ui-twotone/48/Paul-18-512.png">
-            <span class="card-name">Camilo Jaime</span>
+            <span class="card-name">{{ User?.firstName }} {{ User?.lastName }}</span>
           </mat-card-content>
         </mat-card>
 
@@ -93,9 +90,9 @@
           <mat-card-header class="post-message-header"
                            style="padding-bottom: 20px; border-bottom: 1px solid lightgray;">
             <img
-              alt=""
+              alt="{{ User?.firstName }}"
               mat-card-avatar
-              [src]="">
+              [src]="User?.avatar">
             <form #form="ngForm" (ngSubmit)="postMessage(form)">
               <input class="on-your-mind" name="message" ngModel placeholder="What's on your mind?" type="text">
               <button style="display: none;" type="submit"></button>
@@ -124,7 +121,7 @@
           <mat-card-header class="posts__header">
             <img alt="{{ p?.title }}" mat-card-avatar [src]="p?.avatar">
             <div class="posts__header__right">
-              <span>{{ p?.time?.seconds * 1000 | date:'shortTime' }}</span>
+              <span>{{ p?.time?.seconds * 1000 | date:'medium' }}</span>
               <h3>{{ p?.title }}</h3>
             </div>
           </mat-card-header>

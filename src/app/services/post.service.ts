@@ -1,17 +1,17 @@
-import { Injectable } from '@angular/core';
-import {AngularFirestore, AngularFirestoreModule} from "@angular/fire/firestore";
-import {AngularFireAuth} from "@angular/fire/auth";
-import firebase from "firebase";
-'import { User } from "firebase"';
-import {AuthService} from "./auth.service";
-import {from, Observable} from "rxjs";
-import {map} from "rxjs/operators";
+import {Injectable} from '@angular/core';
+import {AngularFirestore} from '@angular/fire/firestore';
+import {map} from 'rxjs/operators';
+import {Observable} from 'rxjs';
+import * as firebase from 'firebase';
+import {User} from 'firebase';
+import {AuthService} from './auth.service';
+import {AngularFireAuth} from '@angular/fire/auth';
 
 @Injectable({
   providedIn: 'root'
 })
 export class PostService {
-    currentUser: firebase.User;
+  currentUser: User;
 
   constructor(private afs: AngularFirestore,
               private afAuth: AngularFireAuth,
@@ -34,7 +34,7 @@ export class PostService {
       );
   }
 
-  postMessage(message: string, ownerName: string, otherItem): void {
+  postMessage(message: string, ownerName: string, otherItem: {}): void {
     this.afs.collection('posts').add({
       message,
       title: ownerName,
@@ -43,5 +43,6 @@ export class PostService {
       ...otherItem
     }).then(res => console.log(res));
   }
+
 
 }
